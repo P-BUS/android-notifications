@@ -68,7 +68,7 @@ class EggTimerFragment : Fragment() {
                 channelId,
                 channelName,
                 // TODO: Step 2.4 change importance
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_HIGH
             )
             // TODO: Step 2.6 disable badges for this channel
             notificationChannel.apply {
@@ -76,6 +76,8 @@ class EggTimerFragment : Fragment() {
                 lightColor.red
                 enableVibration(true)
                 description = "Time for breakfast"
+                // badges (dots) don't make sense in our case
+                setShowBadge(false)
             }
             val notificationManager = requireActivity().getSystemService(
                 NotificationManager::class.java
