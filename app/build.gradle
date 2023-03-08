@@ -23,6 +23,7 @@ android {
     defaultConfig {
         applicationId "com.example.android.eggtimernotifications"
         minSdkVersion 19
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -61,3 +62,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:19.0.1'
     implementation 'android.arch.work:work-runtime:1.0.1'
 }
+
+apply plugin: 'com.google.gms.google-services'
