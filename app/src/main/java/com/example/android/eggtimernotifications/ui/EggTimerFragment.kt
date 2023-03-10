@@ -22,6 +22,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +34,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.android.eggtimernotifications.R
 import com.example.android.eggtimernotifications.databinding.FragmentEggTimerBinding
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+
 
 class EggTimerFragment : Fragment() {
 
@@ -55,8 +58,16 @@ class EggTimerFragment : Fragment() {
 
         // TODO: Step 1.7 call create channel
         createChannel(
+            getString(R.string.egg_notification_channel_id),
+            getString(R.string.egg_notification_channel_name)
+        )
+        // TODO: Step 3.1 create a new channel for FCM
+        createChannel(
             getString(R.string.breakfast_notification_channel_id),
-            getString(R.string.egg_notification_channel_name))
+            getString(R.string.breakfast_notification_channel_name)
+        )
+        // TODO: Step 3.4 call subscribe topics on start
+        subscribeTopic()
 
         return binding.root
     }
@@ -85,6 +96,20 @@ class EggTimerFragment : Fragment() {
             notificationManager.createNotificationChannel(notificationChannel)
         }
         // TODO: Step 1.6 END create a channel
+    }
+
+    // TODO: Step 3.3 subscribe to breakfast topic
+    private fun subscribeTopic() {
+        // [START subscribe_topics]
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+            .addOnCompleteListener { task ->
+                var msg = getString(R.string.message_subscribed)
+                if (!task.isSuccessful) {
+                    msg = getString(R.string.message_subscribe_failed)
+                }
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            }
+        // [END subscribe_topics]
     }
 
     companion object {
